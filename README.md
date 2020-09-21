@@ -1,22 +1,24 @@
-# static-webview
+# webview
 
-A cross-platform program that serves files from disk and shows them in a native webview.
+A cross-platform program that launches a webview pointed at either a URL or files on disk (in which case it spawns a local http server for them).
 
 On macOS, it uses Cocoa/WebKit, on Windows 10, it uses Edge, and on Linux/FreeBSD, it uses gtk-webkit2 (so it depends on GTK3 and GtkWebkit2 on Linux).
 
 ## Usage
 
 ```
-static-webview [options]
+webview [options]
 
   -dir string
         path to serve (default "./static")
-  -height int
-        height of the webview window (default 600)
+  -url string
+        instead of serving files, load this url
   -title string
         title of the webview window (default "webview")
   -width int
         width of the webview window (default 800)
+  -height int
+        height of the webview window (default 600)
 ```
 
 ## Notes
