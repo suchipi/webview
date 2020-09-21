@@ -1,6 +1,6 @@
 # webview
 
-A cross-platform program that launches a webview pointed at either a URL or files on disk (in which case it spawns a local http server for them).
+A cross-platform program that launches a webview pointed at either a URL or files on disk (in which case it spawns a local http server for them on an automatically-allocated port).
 
 On macOS, it uses Cocoa/WebKit, on Windows 10, it uses Edge, and on Linux/FreeBSD, it uses gtk-webkit2 (so it depends on GTK3 and GtkWebkit2 on Linux).
 
