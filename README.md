@@ -9,15 +9,15 @@ On macOS, it uses Cocoa/WebKit, on Windows 10, it uses Edge, and on Linux/FreeBS
 ```
 webview [options]
 
-  -dir string
+  --dir string
         path to serve (default "./static")
-  -url string
+  --url string
         instead of serving files, load this url
-  -title string
+  --title string
         title of the webview window (default "webview")
-  -width int
+  --width int
         width of the webview window (default 800)
-  -height int
+  --height int
         height of the webview window (default 600)
 ```
 
