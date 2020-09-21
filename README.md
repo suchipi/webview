@@ -4,6 +4,10 @@ A cross-platform program that launches a webview pointed at either a URL or file
 
 On macOS, it uses Cocoa/WebKit, on Windows 10, it uses Edge, and on Linux/FreeBSD, it uses gtk-webkit2 (so it depends on GTK3 and GtkWebkit2 on Linux).
 
+## Installation
+
+Get the binaries from the `bin` folder in this repo.
+
 ## Usage
 
 ```
