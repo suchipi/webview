@@ -117,7 +117,7 @@ type options struct {
 	Height int    `long:"height" description:"height of the webview window" default:"600" json:"height"`
 
 	// Stuff only the launcher uses
-	Exe string `long:"webviewExe" decsription:"path to the webview exe to run" json:"webviewExe"`
+	Exe string `long:"webviewExe" description:"path to the webview exe to run" json:"webviewExe"`
 }
 
 func loadJSONConfig(opts *options) {
