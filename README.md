@@ -14,7 +14,7 @@ Get the binaries from the `bin` folder in this repo.
 webview [options]
 
   --dir string
-        path to serve (default "./static")
+        path to serve (default ".")
   --url string
         instead of serving files, load this url
   --title string

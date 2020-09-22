@@ -46,7 +46,7 @@ func runWebview(url string, title string, width int, height int) {
 }
 
 type options struct {
-	Dir    string `short:"d" long:"dir" description:"path to serve" default:"./static" json:"dir"`
+	Dir    string `short:"d" long:"dir" description:"path to serve" default:"." json:"dir"`
 	URL    string `long:"url" description:"instead of serving files, navigate to this url" default:"" json:"url"`
 	Title  string `long:"title" description:"title of the webview window" default:"webview" json:"title"`
 	Width  int    `long:"width" description:"width of the webview window" default:"800" json:"width"`
