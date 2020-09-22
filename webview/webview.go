@@ -49,8 +49,8 @@ func main() {
 		Dir    string `short:"d" long:"dir" description:"path to serve" default:"./static"`
 		URL    string `long:"url" description:"instead of serving files, navigate to this url" default:""`
 		Title  string `long:"title" description:"title of the webview window" default:"webview"`
-		Width  int    `short:"w" long:"width" description:"width of the webview window" default:"800"`
-		Height int    `short:"h" long:"height" description:"height of the webview window" default:"600"`
+		Width  int    `long:"width" description:"width of the webview window" default:"800"`
+		Height int    `long:"height" description:"height of the webview window" default:"600"`
 	}
 
 	parser := flags.NewParser(&opts, flags.Default|flags.IgnoreUnknown)
