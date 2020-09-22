@@ -93,7 +93,11 @@ func runWebview(exePath string) {
 		dir := executableDir()
 		webviewExe = filepath.Join(dir, "webview.exe")
 	} else {
-		webviewExe = exePath
+		if strings.HasPrefix(exePath, "./") || strings.HasPrefix(exePath, ".\\") || strings.HasPrefix(exePath, "../") || strings.HasPrefix(exePath, ".\\") {
+			webviewExe = filepath.Join(executableDir(), exePath)
+		} else {
+			webviewExe = exePath
+		}
 	}
 
 	if fileExists(webviewExe) {
@@ -131,7 +135,7 @@ func loadJSONConfig(opts *options) {
 			return
 		}
 
-		json.Unmarshal(bytes, options)
+		json.Unmarshal(bytes, opts)
 	}
 }
 
