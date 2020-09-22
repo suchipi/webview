@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -43,6 +45,8 @@ func errorBox(label string, errm error) {
 	if err != nil {
 		panic(err)
 	}
+
+	os.Exit(1)
 }
 
 func infoBox(caption string, message string) {
@@ -69,19 +73,24 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+func executableDir() string {
+	exe, err := os.Executable()
+	if err != nil {
+		errorBox("Error trying to get executable path: %s", err)
+	}
+	exe, err = filepath.EvalSymlinks(exe)
+	if err != nil {
+		errorBox("Error trying to evaluate symlinks for executable: %s", err)
+	}
+
+	dir := filepath.Dir(exe)
+	return dir
+}
+
 func runWebview(exePath string) {
 	var webviewExe string
 	if exePath == "" {
-		exe, err := os.Executable()
-		if err != nil {
-			errorBox("Error trying to get executable path: %s", err)
-		}
-		exe, err = filepath.EvalSymlinks(exe)
-		if err != nil {
-			errorBox("Error trying to evaluate symlinks for executable: %s", err)
-		}
-
-		dir := filepath.Dir(exe)
+		dir := executableDir()
 		webviewExe = filepath.Join(dir, "webview.exe")
 	} else {
 		webviewExe = exePath
@@ -95,17 +104,48 @@ func runWebview(exePath string) {
 	}
 }
 
-func main() {
-	var opts struct {
-		Title string `long:"title" description:"title of the webview window" default:"webview"`
-		Exe   string `long:"webviewExe" decsription:"path to the webview exe to run"`
+type options struct {
+	// Stuff from webview. We have them all here so they show up in the help text
+	Dir    string `short:"d" long:"dir" description:"path to serve" default:"./static" json:"dir"`
+	URL    string `long:"url" description:"instead of serving files, navigate to this url" default:"" json:"url"`
+	Title  string `long:"title" description:"title of the webview window" default:"webview" json:"title"`
+	Width  int    `long:"width" description:"width of the webview window" default:"800" json:"width"`
+	Height int    `long:"height" description:"height of the webview window" default:"600" json:"height"`
+
+	// Stuff only the launcher uses
+	Exe string `long:"webviewExe" decsription:"path to the webview exe to run" json:"webviewExe"`
+}
+
+func loadJSONConfig(opts *options) {
+	maybeJSONFile := filepath.Join(executableDir(), "launcher.json")
+	if fileExists(maybeJSONFile) {
+		jsonFile, err := os.Open(maybeJSONFile)
+		if err != nil {
+			// Couldn't open the file; just bail.
+			return
+		}
+		defer jsonFile.Close()
+
+		bytes, err := ioutil.ReadAll(jsonFile)
+		if err != nil {
+			return
+		}
+
+		json.Unmarshal(bytes, options)
 	}
+}
+
+func main() {
+	// We copy the flags from webview.go so they're shown in help
+	var opts options
 
 	parser := flags.NewParser(&opts, flags.Default|flags.IgnoreUnknown)
 	_, err := parser.Parse()
 	if err != nil {
 		panic(err)
 	}
+
+	loadJSONConfig(&opts)
 
 	// Get a list of currently-exempt apps
 	cmd := exec.Command("checknetisolation", "LoopbackExempt", "-s")
