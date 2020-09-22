@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/jessevdk/go-flags"
 	"github.com/webview/webview"
@@ -107,8 +108,15 @@ func main() {
 
 	loadJSONConfig(&opts)
 
+	var dir string
+	if strings.HasPrefix(opts.Dir, "./") || strings.HasPrefix(opts.Dir, "../") || strings.HasPrefix(opts.Dir, ".\\") || strings.HasPrefix(opts.Dir, "..\\") {
+		dir = filepath.Join(executableDir(), opts.Dir)
+	} else {
+		dir = opts.Dir
+	}
+
 	if opts.URL == "" {
-		go fileServer(listener, opts.Dir)
+		go fileServer(listener, dir)
 		url := fmt.Sprintf("http://localhost:%d/", port)
 		runWebview(url, opts.Title, opts.Width, opts.Height)
 	} else {
