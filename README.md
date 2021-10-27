@@ -25,6 +25,20 @@ webview [options]
         height of the webview window (default 600)
 ```
 
+Instead of passing CLI flags, you can also create a `webview.json` file and put it next to the webview binary. If present, it will be used in combination with the command-line arguments.
+
+Example `webview.json`:
+```
+{
+  "url": "https://google.com",
+  "title": "Some Site",
+  "width": 640,
+  "height": 480
+}
+```
+
+In the case that there is a conflict between the CLI flags and the JSON, the value specified by the JSON will be used instead of the value specified by the flag.
+
 ## Notes
 
 Running `window.close()` from JavaScript will close the webview window and exit the program.
