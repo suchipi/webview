@@ -1,2 +1,7 @@
-go build -ldflags="-H windowsgui" -o bin\windows-amd64\webview.exe .\webview\webview.go
-go build -ldflags="-H windowsgui" -o bin\windows-amd64\launcher.exe .\windows-launcher\windows-launcher.go
+cd webview
+go build -ldflags="-H windowsgui" -o ..\bin\windows-amd64\webview.exe .
+cd ..
+
+cd windows-launcher
+go build -ldflags="-H windowsgui" -o ..\bin\windows-amd64\launcher.exe .
+cd ..
