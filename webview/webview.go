@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/jessevdk/go-flags"
-	"github.com/webview/webview"
+	webview "github.com/webview/webview_go"
 )
 
 func getport() (int, net.Listener) {
